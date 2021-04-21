@@ -28,7 +28,8 @@ if __name__ == "__main__":
     organization = os.getenv("ORGANIZATION")
 
     # Get all repos from organization
-    search_string = "org:{} topic:{} is:internal".format(organization, topic)
+    #search_string = "org:{} topic:{} is:internal".format(organization, topic)
+    search_string = "org:{} is:internal".format(organization)
 
     all_repos = gh.search_repositories(search_string)
     repo_list = []
