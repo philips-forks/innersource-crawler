@@ -2,8 +2,15 @@
 
 import json
 import os
+import math
+import time
+import logging
+import dateutil.parser as dp
+from functools import reduce
 from base64 import b64decode
 from os.path import dirname, join
+
+from lib import calculate_score
 
 import github3
 from dotenv import load_dotenv
@@ -17,18 +24,19 @@ if __name__ == "__main__":
     # Auth to GitHub.com
     gh = github3.login(token=os.getenv("GH_TOKEN"))
 
-    # Set the topic
     topic = os.getenv("TOPIC")
     organization = os.getenv("ORGANIZATION")
 
     # Get all repos from organization
     search_string = "org:{} topic:{}".format(organization, topic)
+
     all_repos = gh.search_repositories(search_string)
     repo_list = []
 
     for repo in all_repos:
         if repo is not None:
             print("{0}".format(repo.repository))
+            # print("{0}".format(calculateScore(repo)))
             full_repository = repo.repository.refresh()
 
             innersource_repo = repo.as_dict()
@@ -66,6 +74,7 @@ if __name__ == "__main__":
             innersource_repo["_InnerSourceMetadata"]["topics"] = topics.names
 
             repo_list.append(innersource_repo)
+            calculate_score(repo)
 
     # Write each repository to a repos.json file
     with open("repos.json", "w") as f:
