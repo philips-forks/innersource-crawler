@@ -33,15 +33,11 @@ def calculate_score(repo):
             if len(repo.description) > 30:
                 print("hit 1")
                 iScore += 50
-            else:
-                iScore += 0
 
         if repo._InnerSourceMetadata.get('guidelines') != None:
             if repo._InnerSourceMetadata.get('guidelines'):
                 print("hit 2")
                 iScore += 100
-            else:
-                iScore += 0
 
         if iScore > 3000:
             print("hit 3")
