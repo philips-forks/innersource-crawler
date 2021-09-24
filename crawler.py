@@ -30,6 +30,7 @@ if __name__ == "__main__":
 
     # Get all repos from organization
     search_string = "org:{} topic:{} {}".format(organization, topic, query)
+    print("{0}".format(search_string))
 
     all_repos = gh.search_repositories(search_string)
     repo_list = []
