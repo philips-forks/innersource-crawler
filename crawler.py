@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 
 import json
-import os
-import math
-import time
 import logging
-import dateutil.parser as dp
-from functools import reduce
+import math
+import os
+import time
 from base64 import b64decode
+from functools import reduce
 from os.path import dirname, join
 
-from lib import calculate_score
-
+import dateutil.parser as dp
 import github3
 from dotenv import load_dotenv
+
+from lib import calculate_score
 
 if __name__ == "__main__":
 
@@ -25,10 +25,11 @@ if __name__ == "__main__":
     gh = github3.login(token=os.getenv("GH_TOKEN"))
 
     topic = os.getenv("TOPIC")
+    query = os.getenv("QUERY")
     organization = os.getenv("ORGANIZATION")
 
     # Get all repos from organization
-    search_string = "org:{} topic:{}".format(organization, topic)
+    search_string = "org:{} topic:{} {}".format(organization, topic, query)
 
     all_repos = gh.search_repositories(search_string)
     repo_list = []
