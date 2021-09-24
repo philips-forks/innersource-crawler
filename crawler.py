@@ -24,13 +24,12 @@ if __name__ == "__main__":
     # Auth to GitHub.com
     gh = github3.login(token=os.getenv("GH_TOKEN"))
 
-    topic = os.getenv("TOPIC")
     query = os.getenv("QUERY")
     organization = os.getenv("ORGANIZATION")
 
     # Get all repos from organization
-    search_string = "org:{} topic:{} {}".format(organization, topic, query)
-    print("{0}".format(search_string))
+    search_string = "org:{} {}".format(organization, query)
+    print("Search query: {0}".format(search_string))
 
     all_repos = gh.search_repositories(search_string)
     repo_list = []
